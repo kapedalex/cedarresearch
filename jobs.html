@@ -34,3 +34,147 @@
     background: var(--bg);
     color: var(--ink);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 32px 24px 96px; }
+  header { margin-bottom: 48px; }
+  .topbar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 56px;
+  }
+  .wordmark {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1;
+    color: var(--accent);
+    text-decoration: none;
+    margin: 0;
+  }
+  .wordmark .wm-name {
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 34px;
+    letter-spacing: -0.025em;
+  }
+  .wordmark .wm-sub {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    margin-top: 6px;
+    margin-right: -0.38em;
+  }
+  .nav { font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .nav a {
+    color: var(--faint);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+  }
+  .nav a:hover, .nav a:focus-visible { color: var(--accent); border-bottom-color: var(--accent); }
+  .nav a[aria-current="page"] { color: var(--ink); }
+  .nav span + span::before { content: "  \00B7  "; color: var(--faint); }
+  h1 { font-size: 28px; font-weight: 600; margin: 40px 0 12px; letter-spacing: -0.01em; }
+  .lede { color: var(--faint); font-size: 16px; margin: 0; }
+  .role {
+    border: 1px solid var(--hairline);
+    background: var(--card);
+    border-radius: 6px;
+    padding: 24px 26px 20px;
+    margin: 24px 0;
+    scroll-margin-top: 24px;
+  }
+  .role:target { border-color: var(--accent); }
+  .role h2 { font-size: 20px; font-weight: 600; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .meta { font-size: 13px; color: var(--faint); margin: 0 0 3px; }
+  .meta span { white-space: nowrap; }
+  .meta span + span::before { content: "  \00B7  "; }
+  .paynote { font-size: 13px; color: var(--faint); margin: 0 0 14px; }
+  .role p { font-size: 15px; margin: 12px 0; }
+  .eg { font-size: 14px; color: var(--faint); }
+  .eg b { color: var(--faint); font-weight: 600; }
+  .role h3 {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 16px 0 6px;
+  }
+  .role ul { margin: 0; padding-left: 20px; font-size: 15px; }
+  .role li { margin: 4px 0; }
+  a { color: var(--accent); }
+  .apply { margin-top: 48px; font-size: 15px; }
+  .apply a { font-weight: 500; }
+  .back { display: inline-block; margin-top: 40px; font-size: 14px; color: var(--faint); text-decoration: none; }
+  .back:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="wordmark" href="/" aria-label="Cedar Research, home"><span class="wm-name">cedar</span><span class="wm-sub">Research</span></a>
+    <nav class="nav" aria-label="Main navigation"><span><a href="/">Home</a></span><span><a href="/team.html">Team</a></span><span><a href="/jobs.html" aria-current="page">Jobs</a></span></nav>
+  </div>
+
+  <header>
+    <h1>Open roles</h1>
+    <p class="lede">Cedar works on communicating the risks of AI, from mass surveillance to the catastrophic threats posed by advanced AI, through research and human studies. We are small, funded, and hiring our first people.</p>
+  </header>
+
+  <section class="role" id="technical">
+    <h2>Technical Specialist</h2>
+    <p class="meta"><span>Full time</span><span>London or remote</span><span>$70,000 to $120,000</span></p>
+    <p class="paynote">Depending on experience and location.</p>
+    <p>Research into the catastrophic threats posed by AI, from mass surveillance to loss of control.</p>
+    <p class="eg"><b>Example task:</b> research the data-broker industry and how AI makes it more potent, writing both the code and the paper.</p>
+
+    <h3>You have</h3>
+    <ul>
+      <li>Experience with AI engineering.</li>
+      <li>Experience using Claude Code, Codex, or similar tooling.</li>
+      <li>A strong safety focus.</li>
+    </ul>
+
+    <h3>Bonus</h3>
+    <ul>
+      <li>An existing platform, even a small one, for example on X.</li>
+    </ul>
+  </section>
+
+  <section class="role" id="communications">
+    <h2>Communications and Outreach</h2>
+    <p class="meta"><span>Full time</span><span>London or remote</span><span>$60,000 to $110,000</span></p>
+    <p class="paynote">Depending on experience and location.</p>
+    <p>Get our work in front of far more people, through writing, video, and outreach. Can also include helping run our human studies. Small team.</p>
+    <p class="eg"><b>Example task:</b> run our social media, make videos, and reach out to creators to get our work in front of their audiences.</p>
+
+    <h3>You are</h3>
+    <ul>
+      <li>Strongly focused on AI safety.</li>
+      <li>Native-level English.</li>
+      <li>Willing to write and appear publicly under your own name and face.</li>
+    </ul>
+
+    <h3>Bonus</h3>
+    <ul>
+      <li>An existing platform or audience in AI safety or an adjacent field.</li>
+      <li>Prior work in AI policy or research.</li>
+    </ul>
+  </section>
+
+  <div class="apply">
+    <p>To apply, email <a href="mailto:jobs@cedarresearch.org?subject=Cedar%20application">jobs@cedarresearch.org</a> with a short note, a CV, and a link to something you have made. Mention which role.</p>
+  </div>
+
+  <a class="back" href="/">&larr; Back to cedarresearch.org</a>
+</div>
+</body>
+</html>
