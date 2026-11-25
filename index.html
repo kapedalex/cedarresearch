@@ -34,3 +34,170 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: center;
+  }
+  main {
+    text-align: center;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+  .wordmark {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+    color: var(--accent);
+    text-decoration: none;
+    margin: 0;
+  }
+  .wordmark .wm-name {
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 64px;
+    letter-spacing: -0.025em;
+  }
+  .wordmark .wm-sub {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-right: -0.38em;
+  }
+  .paper {
+    font-size: 14px;
+    color: var(--faint);
+  }
+  .paper a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 1px;
+  }
+  .paper a:hover, .paper a:focus-visible { border-bottom-color: var(--accent); }
+
+  .nav {
+    position: absolute;
+    top: 26px;
+    right: 28px;
+    margin: 0;
+    font-size: 13px;
+    color: var(--faint);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .nav a {
+    color: var(--faint);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+  }
+  .nav a:hover, .nav a:focus-visible { color: var(--accent); border-bottom-color: var(--accent); }
+  .nav span + span::before { content: "  \00B7  "; }
+
+  .donate { align-self: center; display: inline-block; padding: 11px 24px; border: 1px solid var(--accent); border-radius: 3px; background: var(--accent); color: var(--bg); font-size: 14px; text-decoration: none; }
+  .donate:hover { opacity: 0.85; }
+  .donate:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+  .signup { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .signup-label {
+    font-size: 13px;
+    color: var(--faint);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .signup-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .signup input[type="email"] {
+    font: inherit;
+    font-size: 14px;
+    padding: 9px 12px;
+    min-width: 240px;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--hairline);
+    border-radius: 3px;
+  }
+  .signup input[type="email"]::placeholder { color: var(--faint); }
+  .signup input[type="email"]:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .signup button {
+    font: inherit;
+    font-size: 14px;
+    padding: 9px 18px;
+    color: var(--bg);
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .signup button:hover, .signup button:focus-visible { opacity: 0.85; }
+  .signup-note { font-size: 12px; color: var(--faint); }
+  /* honeypot, hidden from people but visible to bots */
+  .signup .hp { position: absolute; left: -9999px; opacity: 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1 class="wordmark" aria-label="Cedar Research"><span class="wm-name">cedar</span><span class="wm-sub">Research</span></h1>
+  <p class="paper"><a href="https://arxiv.org/abs/2602.16800">Large-Scale Online Deanonymization With LLMs</a></p>
+
+  <!-- Posts to a Google Apps Script web app that appends to a Sheet. See SIGNUP-SETUP.md -->
+  <form class="signup" id="signup">
+    <label class="signup-label" for="email">Sign up for updates</label>
+    <div class="signup-row">
+      <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+      <button type="submit">Subscribe</button>
+    </div>
+    <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <p class="signup-note" id="signup-note">Occasional updates on our research.</p>
+  </form>
+  <a class="donate" href="https://www.every.org/cedar-research?code=c832da6e#/donate">Donate</a>
+</main>
+<nav class="nav" aria-label="Main navigation"><span><a href="/" aria-current="page">Home</a></span><span><a href="/team.html">Team</a></span><span><a href="/jobs.html">Jobs</a></span></nav>
+<script>
+  // Paste the Apps Script web app URL here after deploying. See SIGNUP-SETUP.md
+  var SIGNUP_ENDPOINT = "REPLACE_WITH_APPS_SCRIPT_URL";
+
+  (function () {
+    var form = document.getElementById("signup");
+    var note = document.getElementById("signup-note");
+    var button = form.querySelector("button");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = form.email.value.trim();
+      if (!email) return;
+
+      if (SIGNUP_ENDPOINT.indexOf("http") !== 0) {
+        note.textContent = "Sign-up is not configured yet.";
+        return;
+      }
+
+      button.disabled = true;
+      note.textContent = "Sending...";
+
+      // text/plain avoids a CORS preflight; no-cors means we cannot read the
+      // response, so we confirm optimistically. The row still lands in the Sheet.
+      fetch(SIGNUP_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ email: email, website: form.website.value })
+      }).then(function () {
+        form.reset();
+        note.textContent = "Thanks, you are on the list.";
+      }).catch(function () {
+        note.textContent = "Something went wrong. Try again later.";
+        button.disabled = false;
+      });
+    });
+  })();
+</script>
+</body>
+</html>
